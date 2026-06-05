@@ -1,0 +1,29 @@
+name: support-bot
+prompt: |
+  You are a helpful support agent for Acme SaaS. Answer concisely and never invent URLs.
+  User question: {{input}}
+
+cases:
+  - name: password-reset
+    input: How do I reset my password?
+    assert:
+      - type: contains
+        value: settings
+      - type: not-contains
+        value: "http://"
+      - type: max-words
+        value: 100
+      - type: llm-judge
+        rubric: Does the answer correctly explain resetting the password via account settings, politely, without inventing links?
+        threshold: 0.7
+
+  - name: refund-request
+    input: Can I get a refund for last month?
+    assert:
+      - type: contains
+        value: billing
+      - type: max-words
+        value: 120
+      - type: llm-judge
+        rubric: Does the answer point the user to billing/refund steps without promising an unconditional refund?
+        threshold: 0.7

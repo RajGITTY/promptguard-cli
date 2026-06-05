@@ -1,0 +1,21 @@
+# PromptGuard CI configuration.
+# Run locally with:  npm run demo   (uses the mock provider — no API key needed)
+#
+# To run against a real model, set provider/judge to anthropic or openai and
+# export the matching API key (ANTHROPIC_API_KEY or OPENAI_API_KEY).
+
+provider: mock # mock | anthropic | openai
+model: claude-opus-4-8
+
+judge: # the model that grades `llm-judge` assertions
+  provider: mock # set to anthropic/openai for real grading
+  model: claude-opus-4-8
+
+evals:
+  - evals/*.yaml
+
+thresholds:
+  minQualityScore: 0.8 # fail if average judge quality drops below this
+  maxCostUsdPerCase: 0.05 # fail if a run gets too expensive per case
+  maxAvgLatencyMs: 8000
+  maxRegressionDropPct: 5 # fail if quality drops >5% vs the recorded baseline

@@ -1,0 +1,20 @@
+name: 'PromptGuard CI'
+description: 'Fail the PR when your LLM prompts regress on quality, cost, or latency.'
+branding:
+  icon: 'shield'
+  color: 'green'
+inputs:
+  config:
+    description: 'Path to promptguard.yaml'
+    required: false
+    default: 'promptguard.yaml'
+  output:
+    description: 'Path to write the Markdown report'
+    required: false
+    default: 'promptguard-comment.md'
+runs:
+  using: 'composite'
+  steps:
+    - shell: bash
+      run: |
+        npx --yes promptguard-ci run --config "${{ inputs.config }}" --output "${{ inputs.output }}"
