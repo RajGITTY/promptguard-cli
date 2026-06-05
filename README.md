@@ -1,16 +1,34 @@
 # PromptGuard CI
 
-**Unit tests for your LLM prompts.** A drop-in CLI + GitHub Action that runs eval/regression tests on every pull request, so teams shipping LLM features catch **quality, cost, and latency regressions before they merge** — not from angry users or a 10× token bill.
+> **Unit tests for your LLM prompts.** Catch quality, cost, and latency regressions in CI — *before* they ship.
 
-> Change a prompt or bump a model → PromptGuard re-runs your test cases, grades them, compares against a baseline, and **fails the PR** if quality drops, cost spikes, or latency blows past your budget.
+![status](https://img.shields.io/badge/status-early%20MVP-orange)
+![license](https://img.shields.io/badge/license-MIT-green)
+![node](https://img.shields.io/badge/node-%E2%89%A520-blue)
 
----
+LLM features break silently. A one-line prompt edit quietly tanks answer quality for ten cases you weren't watching; a model bump doubles your token bill; nothing throws an error — you find out from production. **PromptGuard turns that into a red check on the pull request.**
 
-## Why
+It runs your prompt test-cases on every PR, grades them (including **LLM-as-judge**), compares against a baseline, and **fails the build** if quality drops, cost spikes, or latency blows its budget. It lives where a dev tool is stickiest: the **merge gate**.
 
-LLM features break silently. A small prompt edit quietly tanks answer quality for ten cases you weren't looking at; a model version bump doubles your token spend; nothing throws an error. You find out from production. PromptGuard makes that failure mode a red check on the PR instead.
+<!-- TODO: replace this terminal block with an animated demo GIF — see docs/RECORD-DEMO.md -->
 
-It sits in the place a dev tool is stickiest: the **merge gate**.
+```text
+$ promptguard run
+
+PromptGuard CI  provider=anthropic model=claude-opus-4-8
+
+support-bot
+  FAIL  password-reset  q=0.74 $0.00131 980ms
+        x llm-judge: judge 0.74 / min 0.80 — invents a reset link not in the docs
+  PASS  refund-request  q=0.91 $0.00115 870ms
+
+Summary
+  quality 0.82   avg cost $0.00123   avg latency 925ms   1/2 failed
+  vs baseline: quality -0.09  (baseline 0.91)
+
+FAIL  gate failed
+  - quality regressed 9.9% vs baseline (> 5%)
+```
 
 ---
 
@@ -123,6 +141,8 @@ Add `ANTHROPIC_API_KEY` / `OPENAI_API_KEY` as repo secrets, drop in a `promptgua
 This is an early **draft / MVP**. Working today: the eval CLI, all assertion types, the mock/Anthropic/OpenAI providers, LLM-as-judge, baseline regression gating, console + Markdown reports, and the example Action.
 
 Roadmap: published npm package + GitHub Marketplace listing, hosted dashboards with run history across the team, trend charts, more providers, and richer judges.
+
+**Feedback wanted.** If you ship an LLM feature and have ever been burned by a silent prompt or model regression, [open an issue](../../issues) — I want to hear how you'd want this to fit your workflow.
 
 ## License
 
