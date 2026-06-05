@@ -15,7 +15,8 @@
     "demo": "tsx src/cli.ts run --config promptguard.yaml",
     "dev": "tsx src/cli.ts",
     "build": "tsc -p tsconfig.json",
-    "start": "node dist/cli.js"
+    "start": "node dist/cli.js",
+    "prepublishOnly": "npm run build"
   },
   "keywords": [
     "llm",
@@ -28,6 +29,17 @@
     "anthropic"
   ],
   "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RajGITTY/promptguard-cli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/RajGITTY/promptguard-cli/issues"
+  },
+  "homepage": "https://github.com/RajGITTY/promptguard-cli#readme",
   "dependencies": {
     "@anthropic-ai/sdk": "^0.100.1",
     "openai": "^6.42.0",

@@ -1,6 +1,7 @@
 node_modules/
 dist/
 *.log
+*.tgz
 # PromptGuard writes its baseline here; commit it on purpose, not by accident.
 # Remove the next line if you DO want to version your baseline.
 .promptguard/

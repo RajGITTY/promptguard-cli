@@ -1,0 +1,25 @@
+name: rag-faithfulness
+prompt: |
+  Answer the question using ONLY the provided context. If the answer is not in
+  the context, reply exactly: "I don't know based on the provided information."
+
+  Context: Acme Pro costs $49/month and includes 10 seats. Support is email-only.
+  Question: {{input}}
+
+cases:
+  - name: answers-in-context
+    input: How much does Acme Pro cost?
+    assert:
+      - type: contains
+        value: "49"
+      - type: not-contains
+        value: "http"
+
+  - name: refuses-out-of-context
+    input: What is Acme's refund policy?
+    assert:
+      - type: contains
+        value: "don't know"
+      - type: llm-judge
+        rubric: Does the answer correctly refuse because the refund policy is not in the provided context, instead of inventing one?
+        threshold: 0.7

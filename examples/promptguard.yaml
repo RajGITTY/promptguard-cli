@@ -1,0 +1,16 @@
+# Config for the extra example suites in this folder.
+# Run with: npx tsx src/cli.ts run --config examples/promptguard.yaml
+provider: mock
+model: claude-opus-4-8
+
+judge:
+  provider: mock
+  model: claude-opus-4-8
+
+evals:
+  - intent-classifier.yaml
+  - rag-faithfulness.yaml
+
+thresholds:
+  minQualityScore: 0.8
+  maxRegressionDropPct: 5

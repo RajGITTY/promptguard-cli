@@ -1,0 +1,32 @@
+name: intent-classifier
+prompt: |
+  Classify the user's support message into exactly one category:
+  billing, technical, sales, or other.
+  Respond with ONLY the lowercase category word, nothing else.
+
+  Message: {{input}}
+
+cases:
+  - name: billing
+    input: I was charged twice this month and need a refund.
+    assert:
+      - type: contains
+        value: billing
+      - type: max-words
+        value: 3
+
+  - name: technical
+    input: The app crashes every time I upload a file.
+    assert:
+      - type: contains
+        value: technical
+      - type: max-words
+        value: 3
+
+  - name: sales
+    input: What's the price difference between the Pro and Team plans?
+    assert:
+      - type: contains
+        value: sales
+      - type: max-words
+        value: 3

@@ -136,6 +136,16 @@ Add `ANTHROPIC_API_KEY` / `OPENAI_API_KEY` as repo secrets, drop in a `promptgua
 
 ---
 
+## More examples
+
+Beyond the support-bot demo, [`examples/`](examples/) has an **intent classifier** and a **RAG-faithfulness** check (the model must refuse when the answer isn't in the provided context). Run them with the mock provider — no key needed:
+
+```bash
+npx tsx src/cli.ts run --config examples/promptguard.yaml
+```
+
+---
+
 ## Status
 
 This is an early **draft / MVP**. Working today: the eval CLI, all assertion types, the mock/Anthropic/OpenAI providers, LLM-as-judge, baseline regression gating, console + Markdown reports, and the example Action.
@@ -143,6 +153,10 @@ This is an early **draft / MVP**. Working today: the eval CLI, all assertion typ
 Roadmap: published npm package + GitHub Marketplace listing, hosted dashboards with run history across the team, trend charts, more providers, and richer judges.
 
 **Feedback wanted.** If you ship an LLM feature and have ever been burned by a silent prompt or model regression, [open an issue](../../issues) — I want to hear how you'd want this to fit your workflow.
+
+## Contributing
+
+Issues and PRs welcome — see [CONTRIBUTING.md](CONTRIBUTING.md). Good first issues are listed there.
 
 ## License
 
