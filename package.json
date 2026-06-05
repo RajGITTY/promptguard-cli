@@ -4,7 +4,7 @@
   "description": "Unit tests for your LLM prompts — catch quality, cost, and latency regressions in CI before they ship.",
   "type": "module",
   "bin": {
-    "promptguard": "./dist/cli.js"
+    "promptguard": "dist/cli.js"
   },
   "files": [
     "dist",
