@@ -4,12 +4,18 @@
 # To run against a real model, set provider/judge to anthropic or openai and
 # export the matching API key (ANTHROPIC_API_KEY or OPENAI_API_KEY).
 
-provider: mock # mock | anthropic | openai
+provider: mock # mock | anthropic | openai | gemini | custom
 model: claude-opus-4-8
 
 judge: # the model that grades `llm-judge` assertions
-  provider: mock # set to anthropic/openai for real grading
+  provider: mock # set to anthropic/openai/gemini/custom for real grading
   model: claude-opus-4-8
+
+# Any OpenAI-compatible endpoint (OpenRouter, Groq, Together, Ollama, ...):
+# set provider: custom and configure it here.
+# custom:
+#   baseUrl: https://openrouter.ai/api/v1
+#   apiKeyEnv: OPENROUTER_API_KEY   # omit for local/no-auth servers
 
 evals:
   - evals/*.yaml

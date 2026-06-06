@@ -42,7 +42,7 @@ export function makeJudge(cfg: Config): Judge {
   if (cfg.judge.provider === 'mock') {
     return async () => ({ score: 0.9, reasoning: 'mock judge (no API key) — assumes a good answer' });
   }
-  const provider = createProvider(cfg.judge.provider);
+  const provider = createProvider(cfg.judge.provider, cfg);
   return async (rubric, input, output) => {
     const r = await provider.generate({
       prompt: buildJudgePrompt(rubric, input, output),

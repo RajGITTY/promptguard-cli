@@ -98,9 +98,35 @@ thresholds:
 
 ---
 
-## Running against a real model
+## Providers
 
-Set the provider (and judge) to `anthropic` or `openai` in `promptguard.yaml` and export the matching key:
+PromptGuard is provider-agnostic. Set `provider` (and `judge.provider`) in `promptguard.yaml`:
+
+| `provider` | Needs | Notes |
+|---|---|---|
+| `mock` | nothing | offline, deterministic — for demos/tests |
+| `anthropic` | `ANTHROPIC_API_KEY` | native Claude |
+| `openai` | `OPENAI_API_KEY` | native OpenAI |
+| `gemini` | `GEMINI_API_KEY` | native Google Gemini |
+| `custom` | a `custom:` block | **any OpenAI-compatible endpoint** |
+
+### Bring your own model via `custom` (plug-and-play)
+
+`custom` speaks the OpenAI `/chat/completions` format, so it works with OpenRouter, Groq, Together, Fireworks, DeepSeek, Ollama, vLLM/LM Studio, Azure, and more — no code:
+
+```yaml
+provider: custom
+model: meta-llama/llama-3.3-70b-instruct
+custom:
+  baseUrl: https://openrouter.ai/api/v1
+  apiKeyEnv: OPENROUTER_API_KEY   # omit for local/no-auth servers like Ollama
+```
+
+For a fully bespoke API, copy [`src/providers/custom.ts`](src/providers/custom.ts) — ~30 lines with two clearly-marked lines to map your request/response shape.
+
+### Running
+
+Set the provider (and judge) in `promptguard.yaml` and export the matching key:
 
 ```bash
 export ANTHROPIC_API_KEY=sk-ant-...   # or OPENAI_API_KEY=sk-...
@@ -148,7 +174,7 @@ npx tsx src/cli.ts run --config examples/promptguard.yaml
 
 ## Status
 
-This is an early **draft / MVP**. Working today: the eval CLI, all assertion types, the mock/Anthropic/OpenAI providers, LLM-as-judge, baseline regression gating, console + Markdown reports, and the example Action.
+This is an early **draft / MVP**. Working today: the eval CLI, all assertion types, the mock / Anthropic / OpenAI / Gemini / custom providers, LLM-as-judge, baseline regression gating, console + Markdown reports, and the example Action.
 
 Roadmap: published npm package + GitHub Marketplace listing, hosted dashboards with run history across the team, trend charts, more providers, and richer judges.
 

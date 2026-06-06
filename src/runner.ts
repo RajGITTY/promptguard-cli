@@ -15,7 +15,7 @@ function renderPrompt(template: string, input: string, vars: Record<string, stri
 
 /** Run every case in a suite: generate, score assertions, tally cost/latency/quality. */
 export async function runSuite(suite: EvalSuite, cfg: Config): Promise<SuiteResult> {
-  const provider = createProvider(cfg.provider);
+  const provider = createProvider(cfg.provider, cfg);
   const judge = makeJudge(cfg);
   const cases: CaseResult[] = [];
 

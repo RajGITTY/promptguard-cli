@@ -16,6 +16,7 @@ interface RawConfig {
   model?: string;
   maxTokens?: number;
   judge?: Partial<Config['judge']>;
+  custom?: Config['custom'];
   evals?: string[];
   thresholds?: Config['thresholds'];
 }
@@ -30,6 +31,7 @@ export function loadConfig(path: string): Config {
       provider: raw.judge?.provider ?? raw.provider ?? DEFAULTS.judge.provider,
       model: raw.judge?.model ?? raw.model ?? DEFAULTS.judge.model,
     },
+    custom: raw.custom,
     evals: raw.evals ?? DEFAULTS.evals,
     thresholds: raw.thresholds ?? DEFAULTS.thresholds,
   };

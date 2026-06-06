@@ -1,6 +1,6 @@
 // Core type definitions shared across PromptGuard CI.
 
-export type ProviderName = 'mock' | 'anthropic' | 'openai';
+export type ProviderName = 'mock' | 'anthropic' | 'openai' | 'gemini' | 'custom';
 
 /** A single generation request sent to a provider (the "model under test"). */
 export interface GenerateRequest {
@@ -69,11 +69,19 @@ export interface JudgeConfig {
   model: string;
 }
 
+/** Settings for the `custom` provider (OpenAI-compatible by default). */
+export interface CustomConfig {
+  baseUrl: string; // e.g. https://openrouter.ai/api/v1 — an OpenAI-compatible base
+  apiKeyEnv?: string; // env var holding the API key; omit for local/no-auth servers
+  headers?: Record<string, string>; // optional extra headers
+}
+
 export interface Config {
   provider: ProviderName;
   model: string;
   maxTokens?: number;
   judge: JudgeConfig;
+  custom?: CustomConfig;
   evals: string[]; // file paths or simple globs like evals/*.yaml
   thresholds: Thresholds;
 }

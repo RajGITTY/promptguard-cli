@@ -19,7 +19,7 @@ npm run build    # type-check + compile to dist/
 | `src/runner.ts` | Runs each case: generate → assert → score |
 | `src/assertions.ts` | The assertion types |
 | `src/judge.ts` | LLM-as-judge grader |
-| `src/providers/` | Pluggable model backends (mock / anthropic / openai) |
+| `src/providers/` | Pluggable model backends (mock / anthropic / openai / gemini / custom) |
 | `src/report.ts` | Gate logic + console & Markdown output |
 | `evals/`, `examples/` | Example eval suites |
 
@@ -36,7 +36,7 @@ union in `src/types.ts`. Keep it deterministic where possible.
 
 ## Good first issues
 
-- A new provider adapter (Azure OpenAI, Gemini, Ollama, OpenRouter).
+- A new native provider adapter (Cohere, Mistral, AWS Bedrock, Vertex AI).
 - New assertion types: `json-schema`, `min-words`, `latency-p95`.
 - Multi-sample LLM-judge (run the judge N times, take the median) for stability.
 - A `--json` output mode for programmatic consumption.
